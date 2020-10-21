@@ -13,6 +13,12 @@ with open(args.file, 'rb') as f:
     tar = tarfile.open(args.file)
     memberdata = tar.getmembers()
     for member in memberdata:
-        if args.string in member.name:
-            print(tar.extract(member, "searchoutput"))
+        try:
+            if args.string in member.name:
+                tar.extract(member, "searchoutput")
+            else:
+                continue
+        except Exception as e:
+            print("Error, skipping file")
+            continue
 print(os.listdir('searchoutput'))
